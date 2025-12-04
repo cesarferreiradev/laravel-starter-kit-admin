@@ -32,3 +32,6 @@ auth.json
 .idea/*.iml
 .idea/
 /public/vendor
+
+.DS_Store
+*/.DS_Store
