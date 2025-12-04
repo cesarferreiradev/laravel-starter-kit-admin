@@ -1,11 +1,55 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@source "../views";
+
+@plugin '@tailwindcss/forms';
+
+@import '../../vendor/tallstackui/tallstackui/css/v4.css';
+
+@source '../../vendor/tallstackui/tallstackui/**/*.php';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+[class*='col-'] {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-1 { width: 8.333333%; }
+.col-1-2 { width: 12.333333%; }
+.col-2 { width: 16.666667%; }
+.col-2-5 { width: 20.666667%; }
+.col-3 { width: 25%; }
+.col-3-5 { width: 28%; }
+.col-4 { width: 33.333333%; }
+.col-4-5 { width: 35.333333%; }
+.col-5 { width: 41.666667%; }
+.col-6 { width: 50%; }
+.col-7 { width: 58.333333%; }
+.col-8 { width: 66.666667%; }
+.col-9 { width: 75%; }
+.col-10 { width: 83.333333%; }
+.col-11 { width: 91.666667%; }
+.col-12 { width: 100%; }
+
+:root {
+   --primary-color: #6c63ff;
+}
+
+.roboto-title-bold{
+     font-family: "Roboto", sans-serif;
+    /*font-family: "Noto Sans", sans-serif;*/
+     font-optical-sizing: auto;
+     font-weight: bold;
 }

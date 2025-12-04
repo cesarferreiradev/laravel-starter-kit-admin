@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.item-sidebar{
+    @apply hover:bg-gray-200 text-gray-700;
+}
+
+.item-sidebar-active{
+    @apply bg-gray-200 text-gray-600;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background: transparent !important;
+}
