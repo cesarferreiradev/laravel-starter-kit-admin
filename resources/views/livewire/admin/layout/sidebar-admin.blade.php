@@ -47,52 +47,7 @@
                 <span>Usuários</span>
             </a>
 
-{{--            <article x-data="{ expandCondominium: '{{ in_array(Route::currentRouteName(), ['admin.blocks', 'admin.common-areas']) }}'}">--}}
-
-{{--                <button x-on:click="expandCondominium = !expandCondominium"--}}
-{{--                        class="item-sidebar cursor-pointer w-full mt-1 flex items-center justify-between px-2 py-1.5 text-sm rounded-md">--}}
-{{--                    <div class="flex items-center gap-3 w-full">--}}
-{{--                        <i class="bx bx-home text-gray-700" style="font-size: 14pt;"></i> <!-- text-[16px] -->--}}
-{{--                        <span>Condomínios</span>--}}
-{{--                    </div>--}}
-{{--                    <svg id="playgroundChevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">--}}
-{{--                        <path d="M4 6l4 4 4-4"/>--}}
-{{--                    </svg>--}}
-{{--                </button>--}}
-
-{{--                <div x-show="expandCondominium" class="ml-6 mt-1 flex flex-col space-y-0.5">--}}
-{{--                    <a--}}
-{{--                        href="{{ route('admin.blocks') }}"--}}
-{{--                        wire:navigate--}}
-{{--                        class="--}}
-{{--                        @if(Route::currentRouteName() == "admin.blocks")--}}
-{{--                            item-sidebar-active--}}
-{{--                        @else--}}
-{{--                            item-sidebar--}}
-{{--                        @endif--}}
-{{--                            w-full text-left px-2 py-1.5 text-sm rounded-md"--}}
-{{--                    >--}}
-{{--                        Blocos--}}
-{{--                    </a>--}}
-
-{{--                    <a--}}
-{{--                        href="{{ route('admin.common-areas') }}"--}}
-{{--                        wire:navigate--}}
-{{--                        class="--}}
-{{--                        @if(Route::currentRouteName() == "admin.common-areas")--}}
-{{--                            item-sidebar-active--}}
-{{--                        @else--}}
-{{--                            item-sidebar--}}
-{{--                        @endif--}}
-{{--                            w-full text-left px-2 py-1.5 text-sm rounded-md"--}}
-{{--                    >--}}
-{{--                        Áreas compartilhadas--}}
-{{--                    </a>--}}
-{{--                </div>--}}
-
-{{--            </article>--}}
-
-
+        </div>
 
     </aside>
 </div>
