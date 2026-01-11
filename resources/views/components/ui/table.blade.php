@@ -9,15 +9,8 @@
     <div class="-m-1.5 overflow-x-hidden">
         <div class="p-1.5 min-w-full inline-block align-middle">
             <div class="rounded-lg">
-                @if($filter)
-                    <div class="py-8 px-4">
-                        <div class="col-3">
-                            <x-ts-input label="Pesquisar" wire:model.live="search" icon="magnifying-glass" />
-                        </div>
-                    </div>
-                @endif
                 <div class="overflow-hidden">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table class="border-l border-r border-slate-100 min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50 border-t border-gray-200">
                             <tr>
                                 @foreach($columns as $column)
