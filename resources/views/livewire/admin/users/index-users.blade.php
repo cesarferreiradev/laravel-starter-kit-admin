@@ -1,9 +1,24 @@
 <div>
-    <section class="mt-3">
+    <x-ui.breadcrumb
+        :items="[
+            [
+                'item'   => 'Usuários',
+                'link'   => route('users.index'),
+                'icon'   => 'square-chart-gantt'
+            ]
+        ]"
+    />
 
-        <div class="flex items-center gap-2">
-            <h3 class="text-gray-700 font-semibold text-lg">Usuários </h3>
+    <x-ui.section-header
+        :title="'Usuários'"
+        :description="'Gerencie e acompanhe todos os usuários da plataforma.'"
+    >
+        <div class="flex items-center gap-2 w-full md:w-auto">
+            <x-ui.button-import-link :text="'Importar via planilha'" />
+            <x-ui.button-register-link
+                :link="route('users.index')"
+                :text="'Adicionar usuário'"
+            />
         </div>
-
-    </section>
+    </x-ui.section-header>
 </div>

@@ -1,110 +1,68 @@
-<div x-data="{ open: false, openCompanies: false }">
-    <header class="h-[68px] border-b border-gray-200 fixed w-[85%] flex items-center justify-between px-14 pr-28">
-        <div
-            class="flex items-center gap-2"
-        >
-            <button class="p-1 hover:bg-gray-100 rounded">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="14" height="14" rx="2"/>
-                    <path d="M7 3v14"/>
-                </svg>
+<div>
+    <header class="flex h-16 items-center gap-4 border-b border-zinc-200 bg-white px-16">
+        <button class="md:hidden">
+            <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+        <div class="flex items-center gap-2">
+            <button id="button-collapsed" class="text-zinc-500 hover:text-zinc-900" @click="toggleSidebar()">
+                <span x-show="!collapsed">
+                    <i data-lucide="panel-left-close" class="h-5 w-5"></i>
+                </span>
+                <span x-show="collapsed" style="display: none;">
+                    <i data-lucide="panel-left-open" class="h-5 w-5"></i>
+                </span>
             </button>
-            <div class="text-sm text-gray-500">
-                |
-            </div>
-            <nav class="flex items-center gap-2 cursor-pointer">
-                <span class="text-gray-500 font-medium">Nome da empresa ou software</span>
-            </nav>
+            <div class="h-4 w-[1px] bg-zinc-200"></div>
+            <span class="text-base text-[13pt] text-gray-700 font-bold capitalize">{{ $title ?? '' }}</span>
         </div>
+        <div class="ml-auto flex items-center gap-10">
 
-        <div>
-            <div
-                @click="open = true"
-                x-on:click.outside="open = false"
-                x-on:keydown.escape.window="open = false"
-                class="cursor-pointer flex items-center space-x-3"
-            >
-                <div class="text-right hidden sm:block">
-                    <p class="text-sm font-medium text-gray-900">{{ auth()->user()->name }}</p>
+            <div class="hidden md:flex items-center gap-3 mr-6">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-white p-1">
+                    @if(isset($company->logo_path) && $company->logo_path)
+                        <img src="{{ asset($company->logo_path) }}" class="h-full w-full object-contain rounded-md" alt="{{ $company->name ?? 'Company' }}">
+                    @else
+                        <i data-lucide="building-2" class="h-5 w-5 text-zinc-400"></i>
+                    @endif
                 </div>
-                <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
-                    <img
-                        class="w-full h-full rounded-full transition-all duration-200"
-                        src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=069494&color=ffffff"
-                        alt="User"
-                    >
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-zinc-900 leading-none">Nome da empresa</span>
+                    <span class="text-xs text-zinc-500 mt-0.5">Licença Ativa</span>
                 </div>
             </div>
+
+            <div class="flex items-center gap-1 border-r border-zinc-200 pr-4 mr-2">
+                <button class="inline-flex h-9 w-9 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-50 hover:text-zinc-900 transition-colors" title="Calendário">
+                    <i data-lucide="calendar" class="h-4 w-4"></i>
+                </button>
+                <button class="inline-flex h-9 w-9 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-50 hover:text-zinc-900 transition-colors" title="Mensagens">
+                    <i data-lucide="message-square" class="h-4 w-4"></i>
+                </button>
+                <button class="relative inline-flex h-9 w-9 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-50 hover:text-zinc-900 transition-colors" title="Notificações">
+                    <i data-lucide="bell" class="h-4 w-4"></i>
+                    <span class="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-red-500 ring-1 ring-white"></span>
+                </button>
+            </div>
+
+            <button class="flex items-center gap-3 rounded-md px-2 py-2 text-left text-sm font-medium hover:bg-zinc-100 transition-colors">
+
+                @php
+                    $name = auth()->user()->name;
+                    $initials = collect(explode(' ', $name))
+                        ->map(fn($word) => strtoupper(substr($word, 0, 1)))
+                        ->take(2)
+                        ->implode('');
+                @endphp
+
+                <div class="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-100 text-zinc-500">
+                    <span class="text-xs font-medium text-zinc-700">{{ $initials }}</span>
+                </div>
+                <div class="hidden md:block">
+                    <p class="text-sm font-medium text-zinc-900">{{ auth()->user()->name }}</p>
+                    <p class="text-xs text-zinc-500">{{ auth()->user()->email }}</p>
+                </div>
+                <i data-lucide="chevron-down" class="hidden h-4 w-4 text-zinc-500 md:block"></i>
+            </button>
         </div>
     </header>
-
-    <section class="flex justify-end pr-28">
-        <ul
-            x-show="open"
-            x-transition:enter="transition ease-out duration-100"
-            x-transition:enter-start="transform opacity-0 scale-95"
-            x-transition:enter-end="transform opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-75"
-            x-transition:leave-start="transform opacity-100 scale-100"
-            x-transition:leave-end="transform opacity-0 scale-95"
-            role="menu"
-            data-popover="profile-menu"
-            data-popover-placement="bottom"
-            class="absolute z-10 min-w-[180px] mt-17 overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm focus:outline-none"
-        >
-            <li
-                role="menuitem"
-                class="cursor-pointer text-slate-800 flex w-full text-sm items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-slate-400">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A6.483 6.483 0 0 0 10 16.5a6.483 6.483 0 0 0 4.793-2.11A5.99 5.99 0 0 0 10 12Z" clip-rule="evenodd" />
-                </svg>
-
-                <p class="text-slate-800 font-medium ml-2">
-                    Meu perfil
-                </p>
-            </li>
-            <li
-                role="menuitem"
-                class="cursor-pointer text-slate-800 flex w-full text-sm items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-slate-400">
-                    <path fill-rule="evenodd" d="M7.84 1.804A1 1 0 0 1 8.82 1h2.36a1 1 0 0 1 .98.804l.331 1.652a6.993 6.993 0 0 1 1.929 1.115l1.598-.54a1 1 0 0 1 1.186.447l1.18 2.044a1 1 0 0 1-.205 1.251l-1.267 1.113a7.047 7.047 0 0 1 0 2.228l1.267 1.113a1 1 0 0 1 .206 1.25l-1.18 2.045a1 1 0 0 1-1.187.447l-1.598-.54a6.993 6.993 0 0 1-1.929 1.115l-.33 1.652a1 1 0 0 1-.98.804H8.82a1 1 0 0 1-.98-.804l-.331-1.652a6.993 6.993 0 0 1-1.929-1.115l-1.598.54a1 1 0 0 1-1.186-.447l-1.18-2.044a1 1 0 0 1 .205-1.251l1.267-1.114a7.05 7.05 0 0 1 0-2.227L1.821 7.773a1 1 0 0 1-.206-1.25l1.18-2.045a1 1 0 0 1 1.187-.447l1.598.54A6.992 6.992 0 0 1 7.51 3.456l.33-1.652ZM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
-                </svg>
-
-                <p class="text-slate-800 font-medium ml-2">
-                    Configurações
-                </p>
-            </li>
-            <li
-                role="menuitem"
-                class="cursor-pointer text-slate-800 flex w-full text-sm items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-slate-400">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0ZM8.94 6.94a.75.75 0 1 1-1.061-1.061 3 3 0 1 1 2.871 5.026v.345a.75.75 0 0 1-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 1 0 8.94 6.94ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
-                </svg>
-
-                <p class="text-slate-800 font-medium ml-2">
-                    Ajuda
-                </p>
-            </li>
-            <hr class="my-2 border-slate-200" role="menuitem" />
-            <li
-                role="menuitem"
-                class="cursor-pointer text-slate-800 flex w-full text-sm items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-slate-400">
-                    <path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 0 1 5.25 2h5.5A2.25 2.25 0 0 1 13 4.25v2a.75.75 0 0 1-1.5 0v-2a.75.75 0 0 0-.75-.75h-5.5a.75.75 0 0 0-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 0 0 .75-.75v-2a.75.75 0 0 1 1.5 0v2A2.25 2.25 0 0 1 10.75 18h-5.5A2.25 2.25 0 0 1 3 15.75V4.25Z" clip-rule="evenodd" />
-                    <path fill-rule="evenodd" d="M19 10a.75.75 0 0 0-.75-.75H8.704l1.048-.943a.75.75 0 1 0-1.004-1.114l-2.5 2.25a.75.75 0 0 0 0 1.114l2.5 2.25a.75.75 0 1 0 1.004-1.114l-1.048-.943h9.546A.75.75 0 0 0 19 10Z" clip-rule="evenodd" />
-                </svg>
-
-                <form method="POST" action="{{ route('logout') }}" class="w-full">
-                    @csrf
-                    <button type="submit" class="block px-4 text-start text-gray-700 hover:bg-gray-100 w-full cursor-pointer">
-                        Sair
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </section>
 </div>

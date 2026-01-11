@@ -1,71 +1,63 @@
 <div>
-
-    <aside class="w-[270px] h-full border-r border-gray-200" style="background-color: #FAFAFA;">
-        <div class="h-[68px] flex items-center justify-between px-4 py-3 border-b border-gray-200">
-            <div class="flex items-center gap-3">
-                <div class="w-6 h-6 bg-gray-900 rounded-md flex items-center justify-center">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="white">
-                        <rect width="12" height="12" rx="1"/>
-                    </svg>
+    <aside
+        :class="collapsed ? 'w-20' : 'w-64'"
+        class="flex-col border-r h-full border-emerald-800 bg-emerald-700 hidden md:flex text-white transition-all duration-300"
+    >
+        <div
+            :class="collapsed ? 'justify-center px-0' : 'px-6'"
+            class="flex h-16 items-center border-b border-emerald-800 transition-all duration-300"
+        >
+            <a class="flex items-center gap-2 font-semibold text-white">
+                <div class="flex h-6 w-6 items-center justify-center rounded-md bg-white text-emerald-700">
+                    <i data-lucide="package" class="h-4 w-4"></i>
                 </div>
-                <div>
-                    <div class="text-sm font-semibold text-gray-900">Módulo gestão</div>
-                    <div class="text-xs text-gray-500">Plano enterprise</div>
+                <span x-show="!collapsed" class="whitespace-nowrap" :class="collapsed ? 'text-xs' : ''">Módulo Admin</span>
+            </a>
+        </div>
+        <div class="flex-1 overflow-y-auto py-4">
+            <nav class="grid gap-1 px-2">
+                <div class="px-2 py-1.5">
+                    <h2
+                        x-show="!collapsed"
+                        class="mb-2 px-2 text-xs font-semibold tracking-tight text-emerald-200 whitespace-nowrap"
+                    >
+                        admin
+                    </h2>
+                    <div class="grid gap-1">
+
+                        <a
+                            wire:navigate
+                            href="{{ route('home.index') }}"
+                            :class="collapsed ? 'justify-center' : ''"
+                            class="base-item-sidebar
+                            @if(Route::currentRouteName() == "home.index")
+                                item-sidebar-active
+                            @else
+                                item-sidebar
+                            @endif"
+                        >
+                            <i data-lucide="layout-grid" class="h-4 w-4 shrink-0"></i>
+                            <span x-show="!collapsed" class="whitespace-nowrap">Dashboard</span>
+                        </a>
+
+                        <a
+                            wire:navigate
+                            href="{{ route('users.index') }}"
+                            :class="collapsed ? 'justify-center' : ''"
+                            class="base-item-sidebar
+                            @if(in_array(Route::currentRouteName(), ["users.index"]))
+                                item-sidebar-active
+                            @else
+                                item-sidebar
+                            @endif"
+                        >
+                            <i data-lucide="users" class="h-4 w-4 shrink-0"></i>
+                            <span x-show="!collapsed" class="whitespace-nowrap">Usuários</span>
+                        </a>
+
+                    </div>
                 </div>
-            </div>
+            </nav>
         </div>
-        <div class="px-3 py-4 mt-3">
-            <div class="text-xs font-medium text-gray-500 px-2 mb-2">admin</div>
-
-            <a
-                href="{{ route('home.index') }}"
-                wire:navigate
-                class="
-                    @if(Route::currentRouteName() === 'home.index')
-                        item-sidebar-active
-                    @else
-                        item-sidebar
-                    @endif
-                    w-full flex items-center mt-1 gap-3 px-2 py-1.5 text-sm rounded-md"
-            >
-                <i class="bx bx-dashboard-alt" style="font-size: 14pt;"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <a
-                href="{{ route('users.index') }}"
-                wire:navigate
-                class="
-                    @if(Route::currentRouteName() === 'users.index')
-                        item-sidebar-active
-                    @else
-                        item-sidebar
-                    @endif
-                    w-full flex items-center mt-1 gap-3 px-2 py-1.5 text-sm rounded-md"
-            >
-                <i class="bx bx-community" style="font-size: 14pt;"></i>
-                <span>Usuários</span>
-            </a>
-
-        </div>
-
     </aside>
 </div>
-
-<script>
-    let playgroundOpen = true;
-
-    function togglePlayground() {
-        playgroundOpen = !playgroundOpen;
-        const submenu = document.getElementById('playgroundSubmenu');
-        const chevron = document.getElementById('playgroundChevron');
-
-        if (playgroundOpen) {
-            submenu.style.display = 'block';
-            chevron.innerHTML = '<path d="M4 6l4 4 4-4"/>';
-        } else {
-            submenu.style.display = 'none';
-            chevron.innerHTML = '<path d="M6 4l4 4-4 4"/>';
-        }
-    }
-</script>
