@@ -1,14 +1,14 @@
 <div>
     <aside
         :class="collapsed ? 'w-20' : 'w-64'"
-        class="flex-col border-r h-full border-emerald-800 bg-emerald-700 hidden md:flex text-white transition-all duration-300"
+        class="flex-col border-r h-full sidebar-wrapper hidden md:flex transition-all duration-300"
     >
         <div
             :class="collapsed ? 'justify-center px-0' : 'px-6'"
-            class="flex h-16 items-center border-b border-emerald-800 transition-all duration-300"
+            class="flex h-16 items-center border-b sidebar-header transition-all duration-300"
         >
-            <a class="flex items-center gap-2 font-semibold text-white">
-                <div class="flex h-6 w-6 items-center justify-center rounded-md bg-white text-emerald-700">
+            <a class="flex items-center gap-2 font-semibold">
+                <div class="flex h-6 w-6 items-center justify-center rounded-md sidebar-logo">
                     <i data-lucide="package" class="h-4 w-4"></i>
                 </div>
                 <span x-show="!collapsed" class="whitespace-nowrap" :class="collapsed ? 'text-xs' : ''">Módulo Admin</span>
@@ -19,7 +19,7 @@
                 <div class="px-2 py-1.5">
                     <h2
                         x-show="!collapsed"
-                        class="mb-2 px-2 text-xs font-semibold tracking-tight text-emerald-200 whitespace-nowrap"
+                        class="mb-2 px-2 text-xs font-semibold tracking-tight sidebar-section-title whitespace-nowrap"
                     >
                         admin
                     </h2>
